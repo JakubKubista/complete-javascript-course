@@ -41,10 +41,6 @@ let budgetController = (() => {
 
             data.items[type].push(newItem);
             return newItem;
-        },
-
-        logging: () => {
-            console.log(data);
         }
     }
 
