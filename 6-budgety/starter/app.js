@@ -10,7 +10,21 @@ let budgetController = (() => {
     this.id = id;
     this.description = description;
     this.value = value;
+    this.percentage = -1;
   };
+
+  Expense.prototype.calculatePercentage = function (totalInc) {
+    if (totalInc > 0) {
+      this.percentage = Math.round((this.value / totalInc) * 100);
+
+    } else {
+      this.percentage = -1;
+    }
+  }
+
+  Expense.prototype.getPercentage = function () {
+    return this.percentage;
+  }
 
   let calculateTotal = (type) => {
     let sum = 0;
@@ -83,6 +97,19 @@ let budgetController = (() => {
       }
     },
 
+    calculatePercentages: () => {
+      data.items.exp.forEach(element => {
+        element.calculatePercentage(data.counts.inc);
+      });
+    },
+
+    getPercentages: () => {
+      let allPercentages = data.items.exp.map((element) => {
+        return element.getPercentage();
+      });
+      return allPercentages;
+    },
+
     getBudget: () => {
       return {
         budget: data.budget,
@@ -108,7 +135,8 @@ let UIController = (() => {
     incomeLabel: '.budget__income--value',
     expensesLabel: '.budget__expenses--value',
     percentageLabel: '.budget__expenses--percentage',
-    container: '.container'
+    container: '.container',
+    expensesPercentageLabel: '.item__percentage'
   }
 
   let createElementFromHTML = (htmlString) => {
@@ -189,6 +217,24 @@ let UIController = (() => {
       }
     },
 
+    displayPercentages: (percentages) => {
+      let elements = document.querySelectorAll(DOMstrings.expensesPercentageLabel);
+
+      let nodeListForEach = (list, callback) => {
+        for (let i = 0; i < list.length; i++) {
+          callback(list[i], i)
+        }
+      };
+
+      nodeListForEach(elements, (element, index) => {
+        if (percentages[index] > 0) {
+          element.textContent = percentages[index] + '%';
+        } else {
+          element.textContent = '---'
+        }
+      });
+    },
+
     getDOMstring: () => {
       return DOMstrings;
     }
@@ -222,6 +268,17 @@ let appController = ((budgetCtrl, UICtrl) => {
     UIController.displayBudget(budget);
   }
 
+  let updatePercentages = () => {
+    // 1. Calculate
+    budgetCtrl.calculatePercentages();
+
+    // 2. Read from the budget
+    let percentages = budgetCtrl.getPercentages();
+
+    // 3. Update UI
+    UIController.displayPercentages(percentages);
+  }
+
   let ctrlAddItem = () => {
     let input, newItem;
 
@@ -244,6 +301,7 @@ let appController = ((budgetCtrl, UICtrl) => {
       updateBudget();
 
       // 6. Calculate and update percentages
+      updatePercentages();
 
     }
   }
@@ -262,8 +320,11 @@ let appController = ((budgetCtrl, UICtrl) => {
       // 2. Delete from UI
       UIController.deleteItem(itemId);
 
-      // 3. Update budget
+      // 3. Calculate and update budget
       updateBudget();
+
+      // 4. Calculate and update percentages
+      updatePercentages();
     }
   };
 
