@@ -136,7 +136,8 @@ let UIController = (() => {
     expensesLabel: '.budget__expenses--value',
     percentageLabel: '.budget__expenses--percentage',
     container: '.container',
-    expensesPercentageLabel: '.item__percentage'
+    expensesPercentageLabel: '.item__percentage',
+    monthLabel: '.budget__title--month'
   };
 
   // Private functions
@@ -163,6 +164,12 @@ let UIController = (() => {
     div.innerHTML = htmlString.trim();
     return div.firstChild;
   }
+
+  let nodeListForEach = (list, callback) => {
+    for (let i = 0; i < list.length; i++) {
+      callback(list[i], i)
+    }
+  };
 
   // Public functions
 
@@ -240,14 +247,9 @@ let UIController = (() => {
       }
     },
 
+    // Loop over DOM object via callback function
     displayPercentages: (percentages) => {
       let elements = document.querySelectorAll(DOMstrings.expensesPercentageLabel);
-
-      let nodeListForEach = (list, callback) => {
-        for (let i = 0; i < list.length; i++) {
-          callback(list[i], i)
-        }
-      };
 
       nodeListForEach(elements, (element, index) => {
         if (percentages[index] > 0) {
@@ -256,6 +258,30 @@ let UIController = (() => {
           element.textContent = '---'
         }
       });
+    },
+
+    displayMonth: () => {
+      let now, year, month, months;
+
+      months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      now = new Date();
+      year = now.getFullYear();
+      month = now.getMonth();
+
+      document.querySelector(DOMstrings.monthLabel).textContent = months[month] + ' ' + year;
+    },
+
+    changedType: () => {
+      let elements = document.querySelectorAll(
+        DOMstrings.inputType + ',' +
+        DOMstrings.inputDescription + ',' +
+        DOMstrings.inputValue);
+
+      nodeListForEach(elements, function (element) {
+        element.classList.toggle('red-focus');
+      });
+
+      document.querySelector(DOMstrings.inputButton).classList.toggle('red');
     },
 
     getDOMstring: () => {
@@ -278,6 +304,8 @@ let appController = ((budgetCtrl, UICtrl) => {
     });
 
     document.querySelector(DOMstring.container).addEventListener('click', ctrlDeleteItem);
+
+    document.querySelector(DOMstring.inputType).addEventListener('change', UIController.changedType);
   };
 
   let updateBudget = () => {
@@ -354,6 +382,7 @@ let appController = ((budgetCtrl, UICtrl) => {
   return {
     init: () => {
       console.log('Application has been started');
+      UIController.displayMonth();
       UIController.displayBudget({
         budget: 0,
         totalInc: 0,
