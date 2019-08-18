@@ -35,22 +35,35 @@ let budgetController = (() => {
 
   return {
     addItem: (type, description, value) => {
-      let newItem, ID;
+      let newItem, id;
 
       if (data.items[type].length > 0) {
-        ID = data.items[type][data.items[type].length - 1].id + 1;
+        id = data.items[type][data.items[type].length - 1].id + 1;
       } else {
-        ID = 0;
+        id = 0;
       }
 
       if (type === 'inc') {
-        newItem = new Income(ID, description, value);
+        newItem = new Income(id, description, value);
       } else if (type === 'exp') {
-        newItem = new Expense(ID, description, value);
+        newItem = new Expense(id, description, value);
       }
 
       data.items[type].push(newItem);
       return newItem;
+    },
+
+    deleteItem: (type, id) => {
+      let ids, index;
+
+      ids = data.items[type].map((element) => {
+        return element.id;
+      });
+
+      index = ids.indexOf(id);
+      if (index !== -1) {
+        data.items[type].splice(index, 1)
+      }
     },
 
     calculateBudget: () => {
@@ -94,7 +107,8 @@ let UIController = (() => {
     budgetLabel: '.budget__value',
     incomeLabel: '.budget__income--value',
     expensesLabel: '.budget__expenses--value',
-    percentageLabel: '.budget__expenses--percentage'
+    percentageLabel: '.budget__expenses--percentage',
+    container: '.container'
   }
 
   let createElementFromHTML = (htmlString) => {
@@ -119,7 +133,7 @@ let UIController = (() => {
       // Create HTML and fill values
       if (type === 'inc') {
         element = DOMstrings.incomeContainer;
-        html = `<div class="item clearfix" id="income-${obj.id}">
+        html = `<div class="item clearfix" id="inc-${obj.id}">
                     <div class="item__description">${obj.description}</div>
                     <div class="right clearfix">
                         <div class="item__value">${obj.value}</div>
@@ -130,7 +144,7 @@ let UIController = (() => {
                 </div>`;
       } else if (type === 'exp') {
         element = DOMstrings.expensesContainer;
-        html = `<div class="item clearfix" id="expense-${obj.id}">
+        html = `<div class="item clearfix" id="exp-${obj.id}">
                     <div class="item__description">${obj.description}</div>
                     <div class="right clearfix">
                         <div class="item__value">${obj.value}</div>
@@ -144,6 +158,11 @@ let UIController = (() => {
 
       // Insert created HTML into the DOM
       document.querySelector(element).insertAdjacentElement('beforeend', createElementFromHTML(html));
+    },
+
+    deleteItem: (id) => {
+      let element = document.getElementById(id);
+      element.parentNode.removeChild(element);
     },
 
     clearFileds: () => {
@@ -188,6 +207,8 @@ let appController = ((budgetCtrl, UICtrl) => {
         ctrlAddItem();
       }
     });
+
+    document.querySelector(DOMstring.container).addEventListener('click', ctrlDeleteItem);
   };
 
   let updateBudget = () => {
@@ -225,8 +246,26 @@ let appController = ((budgetCtrl, UICtrl) => {
       // 6. Calculate and update percentages
 
     }
-
   }
+
+  let ctrlDeleteItem = (event) => {
+    let item, itemId, type, id;
+
+    if (event.target.parentNode.className === 'item__delete--btn') {
+      itemId = event.target.closest('.item').id;
+      type = itemId.split('-')[0];
+      id = parseInt(itemId.split('-')[1]);
+
+      // 1. Delete from data structure
+      item = budgetCtrl.deleteItem(type, id);
+
+      // 2. Delete from UI
+      UIController.deleteItem(itemId);
+
+      // 3. Update budget
+      updateBudget();
+    }
+  };
 
   return {
     init: () => {
