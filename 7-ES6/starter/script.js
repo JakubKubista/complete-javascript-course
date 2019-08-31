@@ -299,3 +299,103 @@
 // // // // // // // // // // // // // // //
 // Lecture: Rest parameters
 
+// // ES5
+// function isFullAge5() {
+//   console.log(arguments); // special variable in all functions to grab parameters as an object
+//   var argsArr = Array.prototype.slice.call(arguments);
+//   argsArr.forEach(function(element) {
+//     console.log(2019 - element >= 25)
+//   });
+// }
+
+// isFullAge5(1990, 1995, 1993);
+
+// // ES6
+// const isFullAge6 = (...years) => {
+//   years.forEach(element => console.log(2019 - element >= 25));
+// }
+// isFullAge6(1990, 1995, 1993);
+
+// Spread operator !== Rest parameter (both are ...)
+// Spread operator = used in function call -> to work with array elements
+// Rest parameter = used in function declaration -> to exact an arbitrary number of parameters
+
+
+// // Example with another parameter (limit)
+
+// // ES5
+// function isFullAge5(limit) {
+//   var argsArr = Array.prototype.slice.call(arguments, 1);
+//   argsArr.forEach(function(element) {
+//     console.log(2019 - element >= limit)
+//   });
+// }
+
+// isFullAge5(25, 1990, 1995, 1993);
+
+// // ES6
+// const isFullAge6 = (limit, ...years) => {
+//   years.forEach(element => console.log(2019 - element >= limit));
+// }
+// isFullAge6(25, 1990, 1995, 1993);
+
+
+// // // // // // // // // // // // // // //
+// Lecture: Default parameters
+
+// // ES5
+// function SmithPerson(firstName, lastName, yearOfBirth, nationality) {
+//   this.firstName = firstName;
+//   this.lastName = lastName === undefined ? 'Smith' : lastName;
+//   this.yearOfBirth = yearOfBirth;
+//   this.nationality = nationality === undefined ? 'Norwegian' : nationality;
+// }
+
+// // ES6
+// function SmithPerson (firstName, lastName = 'Smith', yearOfBirth, nationality = 'Czech') {
+//   this.firstName = firstName;
+//   this.lastName = lastName;
+//   this.yearOfBirth = yearOfBirth;
+//   this.nationality = nationality;
+// }
+
+// var john = new SmithPerson('John', undefined, 1990);
+// var emily = new SmithPerson('Emily', 'Diaz', 1994, 'Spanish');
+
+
+// // // // // // // // // // // // // // //
+// Lecture: Maps
+
+// const question = new Map();
+// question.set('question', 'What is the latest Major JavaScript version?');
+// question.set(1, 'ES2015');
+// question.set(2, 'ES6');
+// question.set(3, 'ES7');
+// question.set(4, 'ES2018');
+// question.set(5, 'ES9');
+// question.set('correct', 4);
+// question.set(true, 'Correct answer');
+// question.set(false, 'Wrong answer, try again');
+
+// console.log(question.get('question'));
+// console.log(question.size);
+// if(question.has(4)) question.delete(4); // delete item by key
+// question.clear(); // delete everything
+
+// question.forEach((element, key) => {
+//   console.log(key, element);
+// });
+
+// for (let [key, value] of question.entries()) {
+//   if (typeof(key) === 'number') console.log(key, value);
+// }
+// // console.log(question);
+
+// const answer = parseInt(prompt(question.get('question')));
+// const isCorrect = question.get(answer === question.get('correct'));
+// console.log(isCorrect);
+
+// A new data structure is also a set
+// let set = new Set([2, 1, 5, 2]);
+// console.log(...set);
+
