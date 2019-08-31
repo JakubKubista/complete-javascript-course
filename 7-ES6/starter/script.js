@@ -182,3 +182,34 @@
 // }
 
 // new Person('Mike').myFriends6(friends);
+
+
+// // // // // // // // // // // // // // //
+// Lecture: Destructuring
+
+// ES5
+var john = ['John', 26];
+var name5 = john[0];
+var age5 = john[1];
+console.log(name5, age5);
+
+// ES6 - array destructuring
+const [name, age] = ['John', 26];
+console.log(name, age);
+
+// ES6 - object destructuring
+const obj = { firstName: 'John', lastName: 'Smith'}
+const {firstName, lastName} = obj;
+console.log(firstName, lastName);
+
+// ES6 - object destructuring with param changes
+const {firstName: a, lastName: b} = obj;
+console.log(a, b);
+
+// ES6 - destructuring with functions
+function calcAgeRetirement(year) {
+  const age = new Date().getFullYear() - year;
+  return [age, 65 - age];
+}
+const [age2, retirement] = calcAgeRetirement(1993);
+console.log(age2, retirement);
