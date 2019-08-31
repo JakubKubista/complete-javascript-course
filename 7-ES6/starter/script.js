@@ -399,3 +399,111 @@
 // let set = new Set([2, 1, 5, 2]);
 // console.log(...set);
 
+
+// // // // // // // // // // // // // // //
+// Lecture: Classes
+
+// // ES5
+// var Person5 = function(name, yearOfBirth, job) {
+//   this.name = name;
+//   this.yearOfBirth = yearOfBirth;
+//   this.job = job;
+// }
+
+// Person5.prototype.calculateAge = function() {
+//   var age = new Date().getFullYear() - this.yearOfBirth;
+//   console.log(age);
+// }
+
+// var john5 = new Person5('John', 1990, 'teacher');
+// john5.calculateAge();
+
+// // ES6
+// class Person6 { // Class definitions are NOT HOISTED
+//   constructor (name, yearOfBirth, job) {
+//     this.name = name;
+//     this.yearOfBirth = yearOfBirth;
+//     this.job = job;
+//   }
+
+//   calculateAge () { // add only methods not propeties
+//     var age = new Date().getFullYear() - this.yearOfBirth;
+//     console.log(age);
+//   }
+
+//   static greeting () {
+//     console.log('Hey there!');
+//   }
+// }
+
+// var john6 = new Person5('John', 1990, 'teacher');
+// john6.calculateAge();
+
+// Person6.greeting(); // attaching methods to an Person6 object
+
+
+// // // // // // // // // // // // // // //
+// Lecture: Classes with Subclasses
+
+// // ES5
+// var Person5 = function(name, yearOfBirth, job) {
+//   this.name = name;
+//   this.yearOfBirth = yearOfBirth;
+//   this.job = job;
+// }
+
+// Person5.prototype.calculateAge = function() {
+//   var age = new Date().getFullYear() - this.yearOfBirth;
+//   console.log(age);
+// }
+
+// var Athlete5 = function(name, yearOfBirth, job, olympicGames, medals) {
+//   Person5.call(this, name, yearOfBirth, job);
+//   this.olympicGames = olympicGames;
+//   this.medals = medals;
+// }
+
+// // Object of athlete needs to behave as a person
+// // So it is possible to connect them via Object.crate§
+
+// Athlete5.prototype = Object.create(Person5.prototype); // Add to prototype chain as a parrent of Person5
+
+// Athlete5.prototype.addMedal = function() { // Needs to be after prototype chaining
+//   this.medals++;
+// }
+
+// var john5 = new Athlete5('John', 1990, 'swimmer', 3, 10);
+// john5.calculateAge();
+// john5.addMedal();
+// console.log(john5);
+
+// // ES6
+// class Person6 {
+//   constructor (name, yearOfBirth, job) {
+//     this.name = name;
+//     this.yearOfBirth = yearOfBirth;
+//     this.job = job;
+//   }
+
+//   calculateAge () {
+//     var age = new Date().getFullYear() - this.yearOfBirth;
+//     console.log(age);
+//   }
+// }
+
+// class Athlete6 extends Person6 {
+//   constructor (name, yearOfBirth, job, olympicGames, medals) {
+//     super(name, yearOfBirth, job);
+//     this.olympicGames = olympicGames;
+//     this.medals = medals;
+//   }
+
+//   addMedal() {
+//     this.medals++;
+//   }
+// }
+
+// var john6 = new Athlete6('John', 1990, 'swimmer', 3, 10);
+// john6.calculateAge();
+// john6.addMedal();
+// console.log(john6);
