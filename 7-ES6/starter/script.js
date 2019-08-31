@@ -187,29 +187,76 @@
 // // // // // // // // // // // // // // //
 // Lecture: Destructuring
 
+// // ES5
+// var john = ['John', 26];
+// var name5 = john[0];
+// var age5 = john[1];
+// console.log(name5, age5);
+
+// // ES6 - array destructuring
+// const [name, age] = ['John', 26];
+// console.log(name, age);
+
+// // ES6 - object destructuring
+// const obj = { firstName: 'John', lastName: 'Smith'}
+// const {firstName, lastName} = obj;
+// console.log(firstName, lastName);
+
+// // ES6 - object destructuring with param changes
+// const {firstName: a, lastName: b} = obj;
+// console.log(a, b);
+
+// // ES6 - destructuring with functions
+// function calcAgeRetirement(year) {
+//   const age = new Date().getFullYear() - year;
+//   return [age, 65 - age];
+// }
+// const [age2, retirement] = calcAgeRetirement(1993);
+// console.log(age2, retirement);
+
+
+// // // // // // // // // // // // // // //
+// Lecture: Arrays
+
+// const boxes = document.querySelectorAll('.box');
+// console.log(boxes); // NodeList
+
+// // ES5
+// var boxesArr5 = Array.prototype.slice.call(boxes);
+// console.log(boxesArr5); // Array of html nodes
+
+// boxesArr5.forEach(function(element) {
+//   element.style.backgroundColor = 'dodgerblue';
+// }); // change color of all elements
+
+// // ES6
+// Array.from(boxes).forEach(element => {
+//   element.style.backgroundColor = 'dodgerblue';
+// }); // Array.from(*) == Array.prototype.slice.call(*)
+
+
+// // Change the content of boxes
+
+// // ES5
+// for (var i = 0; i < boxesArr5.length; i++) {
+//   if (boxesArr5[i].className === 'box blue') continue;
+//   boxesArr5[i].textContent = 'I changed to blue!';
+// }
+
+// //ES6
+// for (const element of boxesArr5) {
+//   if (element.className.includes('blue')) continue;
+//   element.textContent = 'I changed to blue!';
+// }
+
 // ES5
-var john = ['John', 26];
-var name5 = john[0];
-var age5 = john[1];
-console.log(name5, age5);
+// var ages = [12, 17, 8, 21, 14, 11];
+// // var full = ages.map(function(element) {
+// //   return element >= 18;
+// // });
+// // console.log(full.indexOf(true)); // 3
+// // console.log(ages[full.indexOf(true)]); // 21
 
-// ES6 - array destructuring
-const [name, age] = ['John', 26];
-console.log(name, age);
-
-// ES6 - object destructuring
-const obj = { firstName: 'John', lastName: 'Smith'}
-const {firstName, lastName} = obj;
-console.log(firstName, lastName);
-
-// ES6 - object destructuring with param changes
-const {firstName: a, lastName: b} = obj;
-console.log(a, b);
-
-// ES6 - destructuring with functions
-function calcAgeRetirement(year) {
-  const age = new Date().getFullYear() - year;
-  return [age, 65 - age];
-}
-const [age2, retirement] = calcAgeRetirement(1993);
-console.log(age2, retirement);
+// // ES6]
+// console.log(ages.findIndex(element => element >= 18)); // 3
+// console.log(ages.find(element => element >= 18)); //21
