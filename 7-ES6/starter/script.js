@@ -257,6 +257,45 @@
 // // console.log(full.indexOf(true)); // 3
 // // console.log(ages[full.indexOf(true)]); // 21
 
-// // ES6]
+// // ES6
 // console.log(ages.findIndex(element => element >= 18)); // 3
 // console.log(ages.find(element => element >= 18)); //21
+
+
+// // // // // // // // // // // // // // //
+// Lecture: Spread operator
+
+// // Use case 1: apply (for a whole array)
+
+// const addFourAges = (a, b, c, d) => a + b + c + d;
+// let sum1 = addFourAges(18, 30, 12, 21);
+// console.log(sum1);
+
+// // ES5
+// var ages = [18, 30, 12, 21];
+// var sum2 = addFourAges.apply(null, ages);
+// console.log(sum2);
+
+// // ES6
+// const sum3 = addFourAges(...ages);
+// console.log(sum3);
+
+// // Use case 2: merge arrays
+
+// const family1 = ['John', 'Jane', 'Mark'];
+// const family2 = ['Mary', 'Tim', 'Jack'];
+// const families = [...family1, family1[0], ...family2];
+// console.log(families);
+
+// // Use case 3: DOM elements
+
+// const h = document.querySelector('h1');
+// const boxes = document.querySelectorAll('.box');
+// const all = [h, ...boxes];
+
+// Array.from(all).forEach(element => element.style.color = 'navy');
+
+
+// // // // // // // // // // // // // // //
+// Lecture: Rest parameters
+
