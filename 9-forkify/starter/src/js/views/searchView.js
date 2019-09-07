@@ -1,13 +1,13 @@
-import { elements } from './base';
+import { elements } from '../utils/base';
+import * as pagination from './pagination';
 
 export const getInput = () => elements.searchInput.value;
 
 export const clearInput = () => elements.searchInput.value = '';
 
-export const clearResults = () => elements.searchResList.innerHTML ='';
-
-const limitRecipeTitleDots = (title, limit = 17) => {
-  return title.length > limit ? title.substring(0, limit) + '...' : title;
+export const clearResults = () => {
+  elements.searchResList.innerHTML ='';
+  elements.searchResPages.innerHTML = '';
 }
 
 const limitRecipeTitle = (title, limit = 17) => {
@@ -15,10 +15,10 @@ const limitRecipeTitle = (title, limit = 17) => {
     const newTitle = [];
 
     // create array from string via split
-    title.split(' ').reduce((count, element) => {
+    title.split(' ').reduce((accumulator, element) => {
       // adding whole words instead of cut string sentense
-      if (count + element.length <= limit) newTitle.push(element);
-      return count + element.length;
+      if (accumulator + element.length <= limit) newTitle.push(element);
+      return accumulator + element.length;
     }, 0);
 
     return `${newTitle.join(' ')} ...`;
@@ -26,6 +26,11 @@ const limitRecipeTitle = (title, limit = 17) => {
 
   return title;
 }
+
+// // Another approach how to show titles
+// const limitRecipeTitleDots = (title, limit = 17) => {
+//   return title.length > limit ? title.substring(0, limit) + '...' : title;
+// }
 
 const renderRecipe = recipe => {
   const markup = `
@@ -44,4 +49,9 @@ const renderRecipe = recipe => {
   elements.searchResList.insertAdjacentHTML('beforeend', markup);
 }
 
-export const renderResults = recipes => recipes.forEach(renderRecipe);
+export const renderResults = (recipes, page = 2, count = 10) => {
+  const start = (page - 1) * count;
+  const end = page * count;
+  recipes.slice(start, end).forEach(renderRecipe);
+  pagination.renderButtons(page, recipes.length, count);
+}

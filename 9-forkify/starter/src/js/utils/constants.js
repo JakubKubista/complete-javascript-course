@@ -3,5 +3,6 @@ export const constants = {
   searchField: 'search__field',
   results: 'results',
   resultsList: 'results__list',
+  resultsPages: 'results__pages',
   loader: 'loader'
 }

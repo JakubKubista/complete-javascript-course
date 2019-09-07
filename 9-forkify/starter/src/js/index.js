@@ -1,6 +1,6 @@
 import Search from './models/Search';
 import * as searchView from './views/searchView';
-import { elements } from './views/base';
+import { elements } from './utils/base';
 import * as loader from './views/loader';
 
 /** Global state of the app
@@ -36,4 +36,13 @@ const controlSearch = async () => {
 elements.searchForm.addEventListener('submit', event => {
   event.preventDefault();
   controlSearch();
+});
+
+elements.searchResPages.addEventListener('click', event => {
+  const btn = event.target.closest('.btn-inline');
+  if (btn) {
+    const goToPage = parseInt(btn.dataset.goto);
+    searchView.clearResults();
+    searchView.renderResults(state.search.results, goToPage);
+  }
 });
