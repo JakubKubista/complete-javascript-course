@@ -1,4 +1,4 @@
-import base from '../utils/base';
+import base from '../../utils/base';
 
 const createButton = (page, type) => `
   <button class="btn-inline results__btn--${type}"

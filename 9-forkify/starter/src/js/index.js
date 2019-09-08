@@ -1,7 +1,7 @@
 import Search from './models/Search';
 import * as searchView from './views/searchView';
 import base from './utils/base';
-import * as loader from './views/loader';
+import * as loader from './views/components/loader';
 import Recipe from './models/Recipe';
 
 /** Global state of the app

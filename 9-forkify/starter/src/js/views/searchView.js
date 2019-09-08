@@ -1,5 +1,5 @@
 import base from '../utils/base';
-import * as pagination from './pagination';
+import * as pagination from './components/pagination';
 
 export const getInput = () => base.searchInput.value;
 
