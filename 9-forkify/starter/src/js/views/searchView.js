@@ -1,13 +1,13 @@
-import { elements } from '../utils/base';
+import base from '../utils/base';
 import * as pagination from './pagination';
 
-export const getInput = () => elements.searchInput.value;
+export const getInput = () => base.searchInput.value;
 
-export const clearInput = () => elements.searchInput.value = '';
+export const clearInput = () => base.searchInput.value = '';
 
 export const clearResults = () => {
-  elements.searchResList.innerHTML ='';
-  elements.searchResPages.innerHTML = '';
+  base.searchResList.innerHTML ='';
+  base.searchResPages.innerHTML = '';
 }
 
 const limitRecipeTitle = (title, limit = 17) => {
@@ -46,10 +46,10 @@ const renderRecipe = recipe => {
       </a>
   </li>
   `;
-  elements.searchResList.insertAdjacentHTML('beforeend', markup);
+  base.searchResList.insertAdjacentHTML('beforeend', markup);
 }
 
-export const renderResults = (recipes, page = 2, count = 10) => {
+export const renderResults = (recipes, page = 1, count = 10) => {
   const start = (page - 1) * count;
   const end = page * count;
   recipes.slice(start, end).forEach(renderRecipe);

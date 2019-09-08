@@ -1,4 +1,4 @@
-import { elements } from '../utils/base';
+import base from '../utils/base';
 
 const createButton = (page, type) => `
   <button class="btn-inline results__btn--${type}"
@@ -24,5 +24,5 @@ export const renderButtons = (page, numResults, resPerPage) => {
     button = createButton(page, 'prev');
   }
 
-  elements.searchResPages.insertAdjacentHTML('afterbegin', button);
+  base.searchResPages.insertAdjacentHTML('afterbegin', button);
 }
