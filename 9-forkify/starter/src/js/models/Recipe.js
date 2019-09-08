@@ -47,7 +47,7 @@ export default class Recipe {
 
       // 3) Parse ingredients into count, unit and ingredient
       const arrIng = ingredient.split(' ');
-      const unitIndex = arrIng.findIndex(el => unitsShort.includes(el));
+      const unitIndex = arrIng.findIndex(el => units.includes(el));
 
       let objIng;
       if (unitIndex > -1) {

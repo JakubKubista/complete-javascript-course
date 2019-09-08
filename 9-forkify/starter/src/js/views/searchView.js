@@ -55,3 +55,9 @@ export const renderResults = (recipes, page = 1, count = 10) => {
   recipes.slice(start, end).forEach(renderRecipe);
   pagination.renderButtons(page, recipes.length, count);
 }
+
+export const highlightSelected = id => {
+  const resultsArr = Array.from(document.querySelectorAll('.results__link'));
+  resultsArr.forEach(element => element.classList.remove('results__link--active'));
+  document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+}
