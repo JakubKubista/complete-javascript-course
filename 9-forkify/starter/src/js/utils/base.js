@@ -8,4 +8,6 @@ export default {
   searchResPages: document.querySelector(`.${constants.resultsPages}`),
   recipeRes: document.querySelector(`.${constants.recipe}`),
   shopping: document.querySelector(`.${constants.shopping}`),
+  likesMenu: document.querySelector(`.${constants.likesField}`),
+  likesList: document.querySelector(`.${constants.likesList}`),
 };

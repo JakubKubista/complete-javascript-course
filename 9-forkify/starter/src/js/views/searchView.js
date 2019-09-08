@@ -10,7 +10,7 @@ export const clearResults = () => {
   base.searchResPages.innerHTML = '';
 }
 
-const limitRecipeTitle = (title, limit = 17) => {
+export const limitRecipeTitle = (title, limit = 17) => {
   if (title.length > limit) {
     const newTitle = [];
 

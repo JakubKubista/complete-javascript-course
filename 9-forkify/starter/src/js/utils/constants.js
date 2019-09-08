@@ -6,5 +6,7 @@ export default {
   resultsPages: 'results__pages',
   recipe: 'recipe',
   shopping: 'shopping__list',
+  likesField: 'likes__field',
+  likesList: 'likes__list',
   loader: 'loader'
 }
