@@ -143,7 +143,7 @@ base.shopping.addEventListener('click', e => {
 });
 
 
-/** 
+/**
  * LIKE CONTROLLER
  */
 const controlLike = () => {
@@ -179,8 +179,15 @@ const controlLike = () => {
     likesView.toggleLikeMenu(state.likes.getNumLikes());
 };
 
-// Testing
-state.likes = new Likes();
+// Restore liked recipes from page laod
+window.addEventListener('load', () => {
+  state.likes = new Likes();
+  state.likes.readStorage();
+  likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+  // Render existing likes
+  state.likes.likes.forEach(element => likesView.renderLike(element));
+})
 
 // Handling recipe button clicks
 base.recipeRes.addEventListener('click', e => {
