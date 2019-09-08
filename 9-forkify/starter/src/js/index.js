@@ -109,7 +109,6 @@ const controlRecipe = async () => {
 
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
 
-
 /**
  * LIST CONTROLLER
  */
@@ -141,7 +140,6 @@ base.shopping.addEventListener('click', e => {
       state.list.updateCount(id, val);
   }
 });
-
 
 /**
  * LIKE CONTROLLER
